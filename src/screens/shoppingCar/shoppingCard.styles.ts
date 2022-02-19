@@ -16,7 +16,3 @@ export const StyledNameProduct = styled.div`
 export const StyledPriceProduct = styled.div`
   ${tw`p-2 font-size[18px]`}
 `;
-
-export const StyledButtonProduct = styled.button`
-  ${tw`py-3 width[60%] border-radius[10px] bg-[rgb(124, 17, 62)] border-0 text-white text-2xl cursor-pointer bg-opacity-90`}
-`;

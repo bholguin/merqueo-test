@@ -1,23 +1,27 @@
 import useActions from "api/actions";
 import { useEffect } from "react";
 import useModels from "models";
+import { IProduct } from "models/interfaces/product";
 
 export const useProducts = () => {
   const { dispatch, useProductActions } = useActions();
-  const { actGetProducts } = useProductActions();
+  const { actGetProducts, actAddProductToCar, actLessProductToCar } =
+    useProductActions();
 
   const { useSelectors } = useModels();
   const { useSelector, useProductSelectors } = useSelectors();
 
   const { productSelector } = useProductSelectors();
 
-  const products = useSelector(productSelector);
+  const products: Array<IProduct> = useSelector(productSelector);
 
-  var formatter = new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  });
+  const addProduct = (product: IProduct) => {
+    dispatch(actAddProductToCar(product));
+  };
+
+  const lessProduct = (product: IProduct) => {
+    dispatch(actLessProductToCar(product));
+  };
 
   useEffect(() => {
     dispatch(actGetProducts());
@@ -26,6 +30,7 @@ export const useProducts = () => {
 
   return {
     products,
-    formatter,
+    addProduct,
+    lessProduct,
   };
 };
