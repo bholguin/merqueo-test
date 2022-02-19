@@ -8,6 +8,8 @@ export interface IProduct {
     special_price?: number;
     status: boolean;
     image_medium_url: string;
+    special_price_expiration_date?: string;
+    special_price_starting_date?: string;
   };
 }
 

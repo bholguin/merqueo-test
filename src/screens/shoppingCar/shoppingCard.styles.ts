@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import tw from "twin.macro";
+import Card from "components/Card";
+
+export const StyledCard = styled(Card)`
+  ${tw`p-10`}
+`;
 
 export const StyledContainer = styled.div`
   ${tw`w-full flex-col-reverse xl:flex-row  flex  pt-20 pb-10`}
@@ -18,11 +23,11 @@ export const StyledImgProduct = styled.img`
 `;
 
 export const StyledNameProduct = styled.div`
-  ${tw`p-2 font-bold font-size[20px]`}
+  ${tw`pt-1 font-bold font-size[20px]`}
 `;
 
 export const StyledTotal = styled.div`
-  ${tw` font-bold py-2`}
+  ${tw` font-bold pb-2`}
 `;
 
 export const StyledPriceProduct = styled.div`
@@ -47,4 +52,12 @@ export const StyledLink = styled.div`
 
 export const StyledPriceOld = styled.div`
   ${tw` font-size[15px] text-decoration[line-through]`}
+`;
+
+export const StyledEmptyCar = styled.h2`
+  ${tw`font-bold px-5`}
+`;
+
+export const StyledLinkEmpty = styled.h2`
+  ${tw` text-[rgb(124, 17, 62)] cursor-pointer text-decoration-line[underline] py-2`}
 `;

@@ -10,7 +10,7 @@ export const StyledImgProduct = styled.img`
 `;
 
 export const StyledNameProduct = styled.div`
-  ${tw`p-2 font-bold font-size[20px]`}
+  ${tw`font-bold font-size[20px]`}
 `;
 
 export const StyledPriceProduct = styled.div`

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 export const StyledContainer = styled.div`
-  ${tw`flex w-[50%] xl:w-[30%] lg:w-[30%] md:w-[30%] justify-around`}
+  ${tw`flex w-[50%] xl:w-[30%] lg:w-[30%] md:w-[30%] justify-around py-1`}
 `;
 
 export const StyledText = styled.div`

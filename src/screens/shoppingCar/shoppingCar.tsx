@@ -18,7 +18,10 @@ import {
     StyledContentDetailProd,
     StyledTotalPrice,
     StyledLink,
-    StyledPriceOld
+    StyledPriceOld,
+    StyledEmptyCar,
+    StyledLinkEmpty,
+    StyledCard
 } from './shoppingCard.styles'
 
 
@@ -31,56 +34,60 @@ const ShoppingCar: FC = (): JSX.Element => {
         <>
             <Header />
             <StyledContainer>
-                <StyledContentProd>
+                {
+                    auxProducts.length === 0
+                        ? <StyledEmptyCar> Aun no tienes producttos en el Carrito <StyledLinkEmpty onClick={goToProducts}> Ir por productos</StyledLinkEmpty></StyledEmptyCar>
+                        : <>
+                            <StyledContentProd>
+                                {auxProducts.map((item: IProduct, index: number) => {
+                                    const price = item.attributes.special_price ? item.attributes.special_price : item.attributes.price
+                                    return (
+                                        <Card key={index}>
+                                            <StyledNameProduct> {item.attributes.name}</StyledNameProduct>
+                                            <StyledImgProduct src={item.attributes.image_medium_url} alt={item.attributes.name} />
+                                            <CantButton onAdd={() => addProduct(item)} onLess={() => lessProduct(item)}>{item.cant_selected}</CantButton>
+                                            {
+                                                item.attributes.special_price
+                                                    ? <>
+                                                        <StyledPriceOld> {formatter.format(item.attributes.price)}</StyledPriceOld>
+                                                        <StyledPriceProduct> {`${formatter.format(price)} x ${item.cant_selected} und`}</StyledPriceProduct>
+                                                    </>
+                                                    : <StyledPriceProduct> {`${formatter.format(price)} x ${item.cant_selected} und`}</StyledPriceProduct>
+                                            }
+                                            <StyledTotal> {`Total ${formatter.format(price * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
+                                        </Card>
+                                    )
+                                })}
+                            </StyledContentProd>
+                            <StyledContentDetail>
+                                <StyledCard>
+                                    <StyledTitleDetail>
+                                        Detalle de la compra
+                                    </StyledTitleDetail>
+                                    {
+                                        auxProducts.map((item: IProduct, index: number) => {
+                                            const price = item.attributes.special_price ? item.attributes.special_price : item.attributes.price
+                                            return (
+                                                <StyledContentDetailProd key={`total-${index}`}>
+                                                    <StyledTotal>{item.attributes.name}</StyledTotal>
+                                                    <StyledTotal> {`${formatter.format(price * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
+                                                </StyledContentDetailProd>
 
-                    {auxProducts.map((item: IProduct, index: number) => {
-                        const price = item.attributes.special_price ? item.attributes.special_price : item.attributes.price
-                        return (
-                            <Card key={index}>
-                                <StyledNameProduct> {item.attributes.name}</StyledNameProduct>
-                                <StyledImgProduct src={item.attributes.image_medium_url} alt={item.attributes.name} />
-                                <CantButton onAdd={() => addProduct(item)} onLess={() => lessProduct(item)}>{item.cant_selected}</CantButton>
-                                {
-                                    item.attributes.special_price
-                                        ? <>
-                                            <StyledPriceOld> {formatter.format(item.attributes.price)}</StyledPriceOld>
-                                            <StyledPriceProduct> {`${formatter.format(price)} x ${item.cant_selected} und`}</StyledPriceProduct>
-                                        </>
-                                        : <StyledPriceProduct> {`${formatter.format(price)} x ${item.cant_selected} und`}</StyledPriceProduct>
-                                }
-                                <StyledTotal> {`Total ${formatter.format(price * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
-                            </Card>
-                        )
-                    })}
+                                            )
+                                        })
+                                    }
+                                    <StyledTotalPrice>
+                                        {`Total ......... ${formatter.format(totalPrice)}`}
+                                    </StyledTotalPrice>
+                                    <Button onClick={cleanCar}>Finalizar la compra</Button>
+                                    <StyledLink onClick={goToProducts}>
+                                        ir por mas productos
+                                    </StyledLink>
 
-                </StyledContentProd>
-                <StyledContentDetail>
-                    <Card>
-                        <StyledTitleDetail>
-                            Detalle de la compra
-                        </StyledTitleDetail>
-                        {
-                            auxProducts.map((item: IProduct, index: number) => {
-                                const price = item.attributes.special_price ? item.attributes.special_price : item.attributes.price
-                                return (
-                                    <StyledContentDetailProd>
-                                        <StyledTotal>{item.attributes.name}</StyledTotal>
-                                        <StyledTotal> {`${formatter.format(price * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
-                                    </StyledContentDetailProd>
-
-                                )
-                            })
-                        }
-                        <StyledTotalPrice>
-                            {`Total ......... ${formatter.format(totalPrice)}`}
-                        </StyledTotalPrice>
-                        <Button onClick={cleanCar}>Finalizar la compra</Button>
-                        <StyledLink onClick={goToProducts}>
-                            ir por mas productos
-                        </StyledLink>
-
-                    </Card>
-                </StyledContentDetail>
+                                </StyledCard>
+                            </StyledContentDetail>
+                        </>
+                }
             </StyledContainer>
 
         </>
