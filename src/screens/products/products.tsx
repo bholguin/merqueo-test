@@ -1,14 +1,25 @@
 
 import { useProducts } from "./hook"
 import { FC } from "react"
-
+import { StyledContainer, StyledProduct, StyledPriceProduct, StyledNameProduct, StyledImgProduct, StyledButtonProduct } from './products.styles'
 
 const Products: FC = (): JSX.Element => {
-    const { products } = useProducts()
+    const { products, formatter } = useProducts()
 
-    console.log(products);
-
-    return <div>get data</div>
+    return (
+        <StyledContainer>
+            {products.data && products.data.map((item: any) => {
+                return (
+                    <StyledProduct>
+                        <StyledImgProduct src={item.attributes.image_medium_url} alt={item.attributes.name} />
+                        <StyledNameProduct> {item.attributes.name}</StyledNameProduct>
+                        <StyledPriceProduct> {formatter.format(item.attributes.price)}</StyledPriceProduct>
+                        <StyledButtonProduct onClick={() => { }}>Comprar</StyledButtonProduct>
+                    </StyledProduct>
+                )
+            })}
+        </StyledContainer>
+    )
 }
 
 

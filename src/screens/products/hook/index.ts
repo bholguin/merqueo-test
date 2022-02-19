@@ -13,6 +13,12 @@ export const useProducts = () => {
 
   const products = useSelector(productSelector);
 
+  var formatter = new Intl.NumberFormat("es-CO", {
+    style: "currency",
+    currency: "COP",
+    maximumFractionDigits: 0,
+  });
+
   useEffect(() => {
     dispatch(actGetProducts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -20,5 +26,6 @@ export const useProducts = () => {
 
   return {
     products,
+    formatter,
   };
 };

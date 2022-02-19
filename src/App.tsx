@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Products from 'screens/products';
 import ShoppingCar from 'screens/shoppingCar';
+import SplashScreen from 'components/SplashScreen';
 
 const App = () => {
   const { useStoreConfig, useAxiosInterceptor } = useConfig()
@@ -17,6 +18,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+        <SplashScreen />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Products />} />
