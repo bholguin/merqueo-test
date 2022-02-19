@@ -26,7 +26,7 @@ export const StyledTotal = styled.div`
 `;
 
 export const StyledPriceProduct = styled.div`
-  ${tw`p-2 font-size[18px]`}
+  ${tw`pb-2 font-size[18px]`}
 `;
 
 export const StyledTitleDetail = styled.h1`
@@ -34,13 +34,17 @@ export const StyledTitleDetail = styled.h1`
 `;
 
 export const StyledContentDetailProd = styled.div`
-  ${tw`px-4 w-full flex justify-between gap-2`}
+  ${tw`px-6 w-full flex justify-between gap-2`}
 `;
 
 export const StyledTotalPrice = styled.h2`
-  ${tw`p-2 font-bold justify-end flex w-full`}
+  ${tw`py-2 font-bold justify-end flex w-full`}
 `;
 
 export const StyledLink = styled.div`
   ${tw` text-[rgb(124, 17, 62)] cursor-pointer text-decoration-line[underline] py-2`}
+`;
+
+export const StyledPriceOld = styled.div`
+  ${tw` font-size[15px] text-decoration[line-through]`}
 `;

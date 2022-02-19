@@ -14,5 +14,9 @@ export const StyledNameProduct = styled.div`
 `;
 
 export const StyledPriceProduct = styled.div`
-  ${tw`p-2 font-size[18px]`}
+  ${tw`pb-2 font-size[18px]`}
+`;
+
+export const StyledPriceOld = styled.div`
+  ${tw` font-size[15px] text-decoration[line-through]`}
 `;

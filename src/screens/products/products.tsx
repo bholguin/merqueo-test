@@ -6,7 +6,7 @@ import CantButton from "components/CantButton"
 import Card from "components/Card"
 import Button from "components/Button"
 import useUtils from "helpers/utils"
-import { StyledContainer, StyledPriceProduct, StyledNameProduct, StyledImgProduct } from './products.styles'
+import { StyledContainer, StyledPriceProduct, StyledNameProduct, StyledImgProduct, StyledPriceOld } from './products.styles'
 import { IProduct } from "models/interfaces/product"
 
 const Products: FC = (): JSX.Element => {
@@ -21,7 +21,15 @@ const Products: FC = (): JSX.Element => {
                         <Card key={index}>
                             <StyledImgProduct src={item.attributes.image_medium_url} alt={item.attributes.name} />
                             <StyledNameProduct> {item.attributes.name}</StyledNameProduct>
-                            <StyledPriceProduct> {formatter.format(item.attributes.price)}</StyledPriceProduct>
+                            {
+                                item.attributes.special_price
+                                    ? <>
+                                        <StyledPriceOld> {formatter.format(item.attributes.price)}</StyledPriceOld>
+                                        <StyledPriceProduct> {formatter.format(item.attributes.special_price)}</StyledPriceProduct>
+                                    </>
+                                    : <StyledPriceProduct> {formatter.format(item.attributes.price)}</StyledPriceProduct>
+                            }
+
                             {item.cant_selected && item.cant_selected > 0
                                 ? <CantButton onAdd={() => addProduct(item)} onLess={() => lessProduct(item)}>{item.cant_selected}</CantButton>
                                 : <Button onClick={() => addProduct(item)}>Comprar</Button>

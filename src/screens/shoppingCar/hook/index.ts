@@ -40,7 +40,10 @@ export const useShoppingCar = () => {
     setTotalPrice(
       products.reduce((acc, a) => {
         const cant = a.cant_selected ? a.cant_selected : 0;
-        return acc + cant * a.attributes.price;
+        const price = a.attributes.special_price
+          ? a.attributes.special_price
+          : a.attributes.price;
+        return acc + cant * price;
       }, 0)
     );
   }, [products]);
