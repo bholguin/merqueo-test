@@ -70,9 +70,26 @@ export const useProductActions = () => {
       });
     };
 
+  const actCleanProductToCar =
+    (onSuccess: () => void) => (dispatch: Dispatch, getState: any) => {
+      const state = getState();
+      let products: Array<IProduct> = [...state.products.data];
+      products = products.map((item: IProduct) => {
+        return { ...item, cant_selected: 0 };
+      });
+
+      dispatch({
+        type: GET_PRODUCTS,
+        payload: products,
+      });
+
+      onSuccess();
+    };
+
   return {
     actGetProducts,
     actAddProductToCar,
     actLessProductToCar,
+    actCleanProductToCar,
   };
 };
