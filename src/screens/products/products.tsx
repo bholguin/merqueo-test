@@ -1,19 +1,12 @@
 
-import useActions from "api/actions"
-import { FC, useEffect } from "react"
+import { useProducts } from "./hook"
+import { FC } from "react"
 
 
 const Products: FC = (): JSX.Element => {
-    const { dispatch, useProductActions } = useActions()
-    const { actGetProducts } = useProductActions()
+    const { products } = useProducts()
 
-
-    useEffect(() => {
-        dispatch(actGetProducts())
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch])
-
-
+    console.log(products);
 
     return <div>get data</div>
 }
