@@ -2,10 +2,6 @@ import { useCallback, useEffect } from "react";
 import axios from "axios";
 
 const useAxiosInterceptor = () => {
-  const axiosApi = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-  });
-
   const handleRequestSuccess = useCallback((request: any) => {
     return request;
   }, []);
@@ -25,24 +21,17 @@ const useAxiosInterceptor = () => {
   }, []);
 
   useEffect(() => {
-    //config Axios for api
-    axiosApi.defaults.params = {};
-    axiosApi.interceptors.request.use(handleRequestSuccess, handleRequestError);
-    axiosApi.interceptors.response.use(
-      handleResponseSuccess,
-      handleResponseError
-    );
+    //config Axios for Api
+    axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+    axios.defaults.params = {};
+    axios.interceptors.request.use(handleRequestSuccess, handleRequestError);
+    axios.interceptors.response.use(handleResponseSuccess, handleResponseError);
   }, [
-    axiosApi,
     handleRequestSuccess,
     handleRequestError,
     handleResponseSuccess,
     handleResponseError,
   ]);
-
-  return {
-    axiosApi,
-  };
 };
 
 export default useAxiosInterceptor;
