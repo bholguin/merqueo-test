@@ -6,26 +6,34 @@ import CantButton from "components/CantButton"
 import Card from "components/Card"
 import Button from "components/Button"
 import useUtils from "helpers/utils"
-import { StyledContainer, StyledPriceProduct, StyledNameProduct, StyledImgProduct, StyledPriceOld } from './products.styles'
 import { IProduct } from "models/interfaces/product"
+import {
+    StyledContainer,
+    StyledPriceProduct,
+    StyledNameProduct,
+    StyledImgProduct,
+    StyledPriceOld
+} from './products.styles'
+
 
 const Products: FC = (): JSX.Element => {
     const { products, addProduct, lessProduct } = useProducts()
-    const { formatter } = useUtils()
+    const { formatter, validatePromoDate } = useUtils()
     return (
         <>
             <Header />
             <StyledContainer>
                 {products.map((item: IProduct, index: number) => {
+                    const price = validatePromoDate(item)
                     return (
                         <Card key={index}>
                             <StyledImgProduct src={item.attributes.image_medium_url} alt={item.attributes.name} />
                             <StyledNameProduct> {item.attributes.name}</StyledNameProduct>
                             {
-                                item.attributes.special_price
+                                price
                                     ? <>
                                         <StyledPriceOld> {formatter.format(item.attributes.price)}</StyledPriceOld>
-                                        <StyledPriceProduct> {formatter.format(item.attributes.special_price)}</StyledPriceProduct>
+                                        <StyledPriceProduct> {formatter.format(price)}</StyledPriceProduct>
                                     </>
                                     : <StyledPriceProduct> {formatter.format(item.attributes.price)}</StyledPriceProduct>
                             }

@@ -2,9 +2,12 @@ import { IProduct } from "models/interfaces/product";
 import { useNavigate } from "react-router-dom";
 import useSelectors from "models/selectors";
 import useActions from "api/actions";
+import useUtils from "helpers/utils";
 import { useEffect, useState } from "react";
 export const useShoppingCar = () => {
   const navigate = useNavigate();
+
+  const { validatePromoDate } = useUtils();
 
   const { dispatch, useProductActions } = useActions();
   const { actAddProductToCar, actLessProductToCar, actCleanProductToCar } =
@@ -40,13 +43,11 @@ export const useShoppingCar = () => {
     setTotalPrice(
       products.reduce((acc, a) => {
         const cant = a.cant_selected ? a.cant_selected : 0;
-        const price = a.attributes.special_price
-          ? a.attributes.special_price
-          : a.attributes.price;
-        return acc + cant * price;
+        const price = validatePromoDate(a);
+        return acc + cant * (price ? price : a.attributes.price);
       }, 0)
     );
-  }, [products]);
+  }, [products, validatePromoDate]);
 
   return {
     auxProducts,

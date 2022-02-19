@@ -28,7 +28,7 @@ import {
 
 const ShoppingCar: FC = (): JSX.Element => {
     const { auxProducts, totalPrice, addProduct, lessProduct, goToProducts, cleanCar } = useShoppingCar()
-    const { formatter } = useUtils()
+    const { formatter, validatePromoDate } = useUtils()
 
     return (
         <>
@@ -40,21 +40,21 @@ const ShoppingCar: FC = (): JSX.Element => {
                         : <>
                             <StyledContentProd>
                                 {auxProducts.map((item: IProduct, index: number) => {
-                                    const price = item.attributes.special_price ? item.attributes.special_price : item.attributes.price
+                                    const price = validatePromoDate(item)
                                     return (
                                         <Card key={index}>
                                             <StyledNameProduct> {item.attributes.name}</StyledNameProduct>
                                             <StyledImgProduct src={item.attributes.image_medium_url} alt={item.attributes.name} />
                                             <CantButton onAdd={() => addProduct(item)} onLess={() => lessProduct(item)}>{item.cant_selected}</CantButton>
                                             {
-                                                item.attributes.special_price
+                                                price
                                                     ? <>
                                                         <StyledPriceOld> {formatter.format(item.attributes.price)}</StyledPriceOld>
                                                         <StyledPriceProduct> {`${formatter.format(price)} x ${item.cant_selected} und`}</StyledPriceProduct>
                                                     </>
-                                                    : <StyledPriceProduct> {`${formatter.format(price)} x ${item.cant_selected} und`}</StyledPriceProduct>
+                                                    : <StyledPriceProduct> {`${formatter.format(item.attributes.price)} x ${item.cant_selected} und`}</StyledPriceProduct>
                                             }
-                                            <StyledTotal> {`Total ${formatter.format(price * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
+                                            <StyledTotal> {`Total ${formatter.format((price ? price : item.attributes.price) * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
                                         </Card>
                                     )
                                 })}
@@ -66,11 +66,11 @@ const ShoppingCar: FC = (): JSX.Element => {
                                     </StyledTitleDetail>
                                     {
                                         auxProducts.map((item: IProduct, index: number) => {
-                                            const price = item.attributes.special_price ? item.attributes.special_price : item.attributes.price
+                                            const price = validatePromoDate(item)
                                             return (
                                                 <StyledContentDetailProd key={`total-${index}`}>
                                                     <StyledTotal>{item.attributes.name}</StyledTotal>
-                                                    <StyledTotal> {`${formatter.format(price * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
+                                                    <StyledTotal> {`${formatter.format((price ? price : item.attributes.price) * (item.cant_selected ? item.cant_selected : 0))}`}</StyledTotal>
                                                 </StyledContentDetailProd>
 
                                             )
